@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Outfit:wght@100..900&family=Sanchez:ital@0;1&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.outfit-700 {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+.outfit-600 {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.outfit-400 {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.sanchez-regular {
+    font-family: "Sanchez", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.sanchez-regular-italic {
+  font-family: "Sanchez", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.league-spartan-800 {
+  font-family: "League Spartan", serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.league-spartan-700 {
+  font-family: "League Spartan", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+/* //////// */
+
+.card-container {
+  display: flex; /* or grid */
+  gap: 1rem;
+}
+
+.card {
+  flex: 1; /* Ensure all cards take up equal space by default */
+  transition: transform 0.3s ease, flex 0.3s ease;
+}
+
+.card:hover {
+  flex: 2; /* Expand the hovered card */
+  transform: scale(1.1); /* Slightly enlarge the hovered card */
+}
+
+.card-container .card:not(:hover) {
+  flex: 0.8; /* Shrink non-hovered cards */
+  transform: scale(0.9); /* Slightly shrink non-hovered cards */
+}
