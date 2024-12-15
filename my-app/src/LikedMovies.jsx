@@ -51,7 +51,7 @@ const LikedMovies = () => {
 
   return (
     <div className="flex flex-col items-center z-50">
-      <h1 className="text-3xl outfit-600">LIKED MOVIES</h1>
+      <h1 className="text-3xl outfit-600 mb-4">LIKED MOVIES</h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
         {likedMovies.map((movie, index) => (
           <div

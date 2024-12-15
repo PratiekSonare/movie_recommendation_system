@@ -4,6 +4,7 @@ function SearchBox() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [movieList, setMovieList] = useState([]); 
+  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -23,13 +24,32 @@ function SearchBox() {
     fetchMovies();
   }, []); 
 
+  const handleAddToFavorites = async (movie) => {
+    const movieData = typeof movie === "string" ? { title: movie } : movie;
+  
+    try {
+      const response = await fetch('http://127.0.0.1:5000/favorites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(movieData), // Send in the correct format
+      });
+  
+      if (response.ok) {
+        setNotification(`${movieData.title} added to favorites!`);
+        setTimeout(() => setNotification(''), 2000); // Clear the notification after 2 seconds
+      } else {
+        console.error('Error adding movie to favorites:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error adding movie to favorites:', error);
+    }
+  };
+
   useEffect(() => {
     setIsVisible(searchTerm.trim().length > 0);
   }, [searchTerm]);
-
-  const clickMovie = (movie) => {
-    setSearchTerm(movie); // Update the search term based on the clicked movie
-  };
 
   // Update filtering logic based on data structure
   const filteredItems = movieList.filter((movie) =>
@@ -59,7 +79,7 @@ function SearchBox() {
               <li
                 key={index}
                 className="py-2 border-b-2 border-r-1 bg-gray-800 border-r-blue-600 border-b-blue-400 border-l-[3px] border-l-blue-600 rounded-md hover:translate-x-5 transition ease-in-out"
-                onClick={() => clickMovie(typeof item === "string" ? item : item.title)} // Handle both strings and objects
+                onClick={() => handleAddToFavorites(item)} // Handle both strings and objects
               >
                 <span className="mx-5 select-none">{typeof item === "string" ? item : item.title}</span>
               </li>
@@ -68,6 +88,13 @@ function SearchBox() {
             <li className="text-gray-500">No items found</li>
           )}
         </ul>
+      )}
+
+      {/* Notification */}
+      {notification && (
+        <div className="fixed top-5 right-[10px] transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg animate-bounce duration-1000 z-50">
+          {notification}
+        </div>
       )}
     </div>
   );

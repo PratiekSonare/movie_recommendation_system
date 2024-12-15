@@ -4,6 +4,7 @@ const MovieList = () => {
   const [movieList, setMovieList] = useState([]);
   const [notification, setNotification] = useState('');
 
+  // fetch total movie list 
   useEffect(() => {
     const fetchMovieList = async () => {
       try {
@@ -17,6 +18,22 @@ const MovieList = () => {
 
     fetchMovieList();
   }, []);
+
+  // fetch liked movie list 
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/favorites');
+        const data = await response.json();
+        setMovieList(data); // Includes title and poster_path
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    };
+
+    fetchFavorites();
+  }, []);
+
 
   const handleAddToFavorites = async (movie) => {
     try {
@@ -73,7 +90,7 @@ const MovieList = () => {
   /////////////////////////
   // displaying more movies
   
-  const [visibleMovies, setVisibleMovies] = useState(30); // Initially display 30 movies
+  const [visibleMovies, setVisibleMovies] = useState(60); // Initially display 30 movies
 
   const moreMovies = () => {
     setVisibleMovies(prev => prev + 30);
